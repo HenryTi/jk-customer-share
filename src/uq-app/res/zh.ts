@@ -5,6 +5,8 @@ export const zh = {
 	test: '测试',
 	debug: 'Debug',
 	me: '我',
+	share: '分享',
+	customer: '客户',
 
 	changePassword: '修改密码',
 	aboutTheApp: '关于本APP',

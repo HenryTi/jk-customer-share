@@ -5,6 +5,8 @@ export const en = {
 	test: 'Test',
 	debug: 'Debug',
 	me: 'Me',
+	share: 'Share',
+	customer: 'Customer',
 
 	changePassword: 'Change password',
 	aboutTheApp: 'About the APP',

@@ -1,0 +1,19 @@
+-- 用来记录正在使用中的NO，编号。
+ID CouponCode (
+	id,
+	key code CHAR(12),
+	expireDate DATE,				-- 失效日期
+);
+
+-- 生成的Coupon
+ID Coupon (
+	id,
+	KEY uCode CHAR(16),				-- 前6位生成日期，后面是code
+	code CHAR(12),					-- 客户可见的code
+	sys(owner, create),				-- 生成人，日期
+);
+
+IX UserCoupon (
+	ix User,
+	id Coupon,
+);

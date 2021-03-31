@@ -1,4 +1,4 @@
-import { CHome } from "./home";
+import { CHome } from "../home";
 import { CMe } from "./me";
 import { CBug } from "./bug";
 import { CUqApp } from "./CBase";
@@ -6,6 +6,9 @@ import { res } from "./res";
 import { VMain } from "./VMain";
 import { CTester } from "./test-uqui";
 import { setUI } from "./uqs";
+import { CCustomer } from "customer";
+import { CShare } from "share";
+import { CCoupon } from "coupon";
 
 const gaps = [10, 3,3,3,3,3,5,5,5,5,5,5,5,5,10,10,10,10,15,15,15,30,30,60];
 
@@ -15,13 +18,22 @@ export class CApp extends CUqApp {
 	cMe: CMe;
 	cUI: CTester;
 
+	cCustomer: CCustomer;
+	cShare: CShare;
+	cCoupon: CCoupon;
+
 	protected async internalStart(isUserLogin: boolean) {
 		this.setRes(res);
 		setUI(this.uqs);
 		this.cHome = this.newC(CHome);
 		this.cBug = this.newC(CBug);
 		this.cMe = this.newC(CMe);
-		this.cUI = this.newC(CTester) as CTester;
+		this.cUI = this.newC(CTester);
+
+		this.cCustomer = this.newC(CCustomer);
+		this.cShare = this.newC(CShare);
+		this.cCoupon = this.newC(CCoupon);
+
 		this.cHome.load();
 		this.openVPage(VMain, undefined, this.dispose);
 		// 加上下面一句，可以实现主动页面刷新
@@ -46,10 +58,10 @@ export class CApp extends CUqApp {
 			//console.error('tick ', new Date());
 			this.tick = 0;
 			if (this.gapIndex < gaps.length - 1) ++this.gapIndex;
-			let ret = await this.uqs.BzHelloTonva.$poked.query(undefined, false);
-			let v = ret.ret[0];
-			if (v === undefined) return;
-			if (!v.poke) return;
+			//let ret = await this.uqs.BzHelloTonva.$poked.query(undefined, false);
+			//let v = ret.ret[0];
+			//if (v === undefined) return;
+			//if (!v.poke) return;
 			this.gapIndex = 1;
 
 			// 数据服务器提醒客户端刷新，下面代码重新调入的数据

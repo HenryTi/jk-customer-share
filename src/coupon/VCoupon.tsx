@@ -7,10 +7,7 @@ export class VCoupon extends VPage<CCoupon> {
 	content() {
 		let {couponItems, onCoupon} = this.controller;
 		return <div className="">
-			<div className="p-2 d-flex">
-				<button className="btn btn-outline-info m-2" onClick={this.controller.showBuildPoint}>积分券</button>
-				<button className="btn btn-outline-success m-2" onClick={this.controller.showBuildDiscount}>优惠券</button>
-			</div>
+			<div className="p-2">{this.controller.renderActions()}</div>
 			<List items={couponItems} item={{render: this.renderCoupon, onClick: onCoupon}}/>
 		</div>;
 	}

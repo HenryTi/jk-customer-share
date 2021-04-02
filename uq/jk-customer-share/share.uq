@@ -1,0 +1,13 @@
+-- 其它服务器发送过来的
+ID Paper (
+	id,
+	key date CHAR(16),			-- YYMMDDHHMM0001 
+	caption CHAR(100),
+	rawID ID,
+);
+
+ID UserPaper (
+	id,
+	key user ID,
+	key paper ID,
+);

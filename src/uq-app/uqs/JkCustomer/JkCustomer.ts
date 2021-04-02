@@ -1,4 +1,4 @@
-//=== UqApp builder created on Thu Apr 01 2021 18:34:32 GMT-0400 (GMT-04:00) ===//
+//=== UqApp builder created on Thu Apr 01 2021 23:56:21 GMT-0400 (GMT-04:00) ===//
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { IDXValue, Uq, UqTuid, UqQuery, UqID, UqIX } from "tonva-react";
 
@@ -93,6 +93,19 @@ export interface Contact {
 	isBirthDayAccurate: number;
 }
 
+export interface Paper {
+	id?: number;
+	date: string;
+	caption: string;
+	rawID: number;
+}
+
+export interface UserPaper {
+	id?: number;
+	user: number;
+	paper: number;
+}
+
 export interface UserCoupon {
 	ix: number;
 	id: number;
@@ -127,6 +140,8 @@ export interface ParamActs {
 	customer?: Customer[];
 	unit?: Unit[];
 	contact?: Contact[];
+	paper?: Paper[];
+	userPaper?: UserPaper[];
 	userCoupon?: UserCoupon[];
 	unitCustomer?: UnitCustomer[];
 	customerContact?: CustomerContact[];
@@ -148,6 +163,8 @@ export interface UqExt extends Uq {
 	Customer: UqID<any>;
 	Unit: UqID<any>;
 	Contact: UqID<any>;
+	Paper: UqID<any>;
+	UserPaper: UqID<any>;
 	UserCoupon: UqIX<any>;
 	UnitCustomer: UqIX<any>;
 	CustomerContact: UqIX<any>;

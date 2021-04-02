@@ -3,6 +3,7 @@ import { ParamActIX } from "tonva-react";
 import { JkCustomerPageItems } from "tools";
 import { CApp, CUqBase } from "uq-app";
 import { Coupon } from "uq-app/uqs/JkCustomer";
+import { VActions } from "./VActions";
 import { VBuildDiscount, VBuildPoint } from "./VBuild";
 import { VCoupon } from "./VCoupon";
 
@@ -23,6 +24,10 @@ export class CCoupon extends CUqBase {
 
 	load = async() => {
 		
+	}
+
+	renderActions() {
+		return this.renderView(VActions);
 	}
 
 	onCoupon = (coupon: Coupon) => {

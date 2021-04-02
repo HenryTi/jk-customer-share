@@ -1,7 +1,7 @@
 import { makeObservable } from "mobx";
-import { PageItems, ParamActIX } from "tonva-react";
+import { ParamActIX } from "tonva-react";
 import { JkCustomerPageItems } from "tools";
-import { CApp, CUqBase, JkCustomer } from "uq-app";
+import { CApp, CUqBase } from "uq-app";
 import { Coupon } from "uq-app/uqs/JkCustomer";
 import { VBuildDiscount, VBuildPoint } from "./VBuild";
 import { VCoupon } from "./VCoupon";

@@ -1,4 +1,4 @@
-import { FA, List, LMR, PropGrid, VPage } from "tonva-react";
+import { FA, LMR, PropGrid, VPage } from "tonva-react";
 import { JkCustomer } from "uq-app";
 import { Contact } from "uq-app/uqs/JkCustomer";
 import { CIDCustomer } from "./CIDCustomer";
@@ -8,7 +8,7 @@ export class VCustomer extends VPage<CIDCustomer> {
 	right() {return this.controller.renderViewRight()}
 	content() {
 		let {item, midID} = this.controller;
-		let {props, IDUI} = midID;
+		let {props} = midID;
 		return <div className="py-3">
 			<PropGrid rows={props}
 				values={item} />

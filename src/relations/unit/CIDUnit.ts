@@ -1,6 +1,5 @@
 import { showIDUnitCustomer } from "relations/customer";
-import { IDUI } from "tonva-react";
-import { CID, MidIXID } from "tonva-uqui";
+import { CID } from "tonva-uqui";
 import { JkCustomer } from "uq-app";
 import { Unit } from "uq-app/uqs/JkCustomer";
 

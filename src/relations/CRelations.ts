@@ -1,12 +1,11 @@
 import { IDUI } from "tonva-react";
-import { CID, MidIXID } from "tonva-uqui";
+import { MidIXID } from "tonva-uqui";
 import { JkCustomerPageItems } from "tools";
 import { CUqBase } from "uq-app";
 import { Customer, Unit } from "uq-app/uqs/JkCustomer";
 import { VRelations } from "./VRelations";
 import { CIDUnit } from "./unit";
-import { showIDUnitCustomer, showIDUserCustomer } from "./customer";
-//import { CIDCustomer } from "./customer";
+import { showIDUserCustomer } from "./customer";
 
 export class CRelations extends CUqBase {
 	unitItems: UnitPageItems;

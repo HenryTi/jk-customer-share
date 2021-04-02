@@ -10,10 +10,10 @@ export class VHome extends VPage<CHome> {
 				onClick={this.controller.share}>
 				分享内容 <span className="badge badge-pill badge-danger">6</span>
 			</LMR>
-			<div className="px-1 py-1 mt-1 bg-white d-flex">
+			<div className="pl-1 py-1 mt-1 bg-white d-flex">
 				{this.controller.cApp.cCoupon.renderActions()}
 				<div className="flex-grow-1 cursor-pointer d-flex justify-content-end align-items-center" onClick={this.controller.coupon}>
-					详情 <FA className="ml-2" name="angle-right" />
+					详情 <FA className="mx-3" name="angle-right" />
 				</div>
 			</div>
 

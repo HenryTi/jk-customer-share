@@ -1,4 +1,4 @@
-import { List, VPage } from "tonva-react";
+import { VPage } from "tonva-react";
 import { Paper } from "uq-app/uqs/JkCustomer";
 import { CShare } from "./CShare";
 

@@ -27,6 +27,7 @@ const fields = {
 /*==fields==*/
 
 const fieldArr: FieldItem[] = [
+	fields.code, fields.expireDate, 
 ];
 
 export const ui: UI = {

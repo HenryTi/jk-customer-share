@@ -6,8 +6,8 @@ import { res } from "./res";
 import { VMain } from "./VMain";
 import { CTester } from "./test-uqui";
 import { setUI } from "./uqs";
-import { CCustomer } from "customer";
-import { CShare } from "share";
+import { CRelations } from "relations";
+import { CShare } from "share"; 
 import { CCoupon } from "coupon";
 
 const gaps = [10, 3,3,3,3,3,5,5,5,5,5,5,5,5,10,10,10,10,15,15,15,30,30,60];
@@ -18,7 +18,7 @@ export class CApp extends CUqApp {
 	cMe: CMe;
 	cUI: CTester;
 
-	cCustomer: CCustomer;
+	cCustomer: CRelations;
 	cShare: CShare;
 	cCoupon: CCoupon;
 
@@ -30,7 +30,7 @@ export class CApp extends CUqApp {
 		this.cMe = this.newC(CMe);
 		this.cUI = this.newC(CTester);
 
-		this.cCustomer = this.newC(CCustomer);
+		this.cCustomer = this.newC(CRelations);
 		this.cShare = this.newC(CShare);
 		this.cCoupon = this.newC(CCoupon);
 

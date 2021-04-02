@@ -1,0 +1,48 @@
+ID Customer (
+	id,
+	key no,
+	name char(50),
+	vice char(100),				-- name + no + vice 总和不能超过100字符	
+);
+
+ID Contact (
+	id,
+	key no,
+	name char(50),
+	vice char(100),							-- 可以描述联系人的职位等等
+	gender TINYINT,							-- 男女
+	mobile char(16),
+	email char(20),
+	birthday DATE,							-- 大致的出生日期
+	isBirthDayAccurate TINYINT DEFAULT 0,	-- 1 表示确定的生日，0 表示估算年龄
+);
+
+IX CustomerContact (
+	ix,
+	id,
+	sort,						-- 重要性排序
+);
+
+-- 机构，主要用来分组显示
+ID Unit (
+	id,
+	-- key parent,				-- 树形结构，暂时不处理树形结构
+	key no,
+	name char(50),
+	vice char(100),				-- name + vice 总和不能超过100字符	
+);
+
+IX UnitCustomer (
+	ix,
+	id,
+);
+
+IX UserUnit (
+	ix USER,
+	id Unit,
+);
+
+IX UserCustomer (
+	ix USER,
+	id Customer,
+);

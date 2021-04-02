@@ -46,6 +46,7 @@ const fields = {
 /*==fields==*/
 
 const fieldArr: FieldItem[] = [
+	fields.name, fields.mul, fields.div, fields.offset, fields.asc, 
 ];
 
 export const ui: UI = {

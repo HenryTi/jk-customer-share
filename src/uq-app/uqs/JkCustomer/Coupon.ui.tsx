@@ -29,6 +29,7 @@ const fields = {
 /*==fields==*/
 
 const fieldArr: FieldItem[] = [
+	fields.uCode, fields.code, 
 ];
 
 export const ui: UI = {
@@ -51,5 +52,6 @@ export const t:TFunc = (str:string|JSX.Element): string|JSX.Element => {
 }
 
 export function render(item: Coupon):JSX.Element {
-	return <>{JSON.stringify(item)}</>;
+	let {code} = item;
+	return <b>{code}</b>;
 };

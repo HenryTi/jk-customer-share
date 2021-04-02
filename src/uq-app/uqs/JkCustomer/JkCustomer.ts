@@ -1,4 +1,4 @@
-//=== UqApp builder created on Wed Mar 31 2021 18:48:06 GMT-0400 (GMT-04:00) ===//
+//=== UqApp builder created on Thu Apr 01 2021 18:34:32 GMT-0400 (GMT-04:00) ===//
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { IDXValue, Uq, UqTuid, UqQuery, UqID, UqIX } from "tonva-react";
 
@@ -67,7 +67,54 @@ export interface CouponCode {
 	expireDate: any;
 }
 
+export interface Customer {
+	id?: number;
+	no?: string;
+	name: string;
+	vice: string;
+}
+
+export interface Unit {
+	id?: number;
+	no?: string;
+	name: string;
+	vice: string;
+}
+
+export interface Contact {
+	id?: number;
+	no?: string;
+	name: string;
+	vice: string;
+	gender: number;
+	mobile: string;
+	email: string;
+	birthday: any;
+	isBirthDayAccurate: number;
+}
+
 export interface UserCoupon {
+	ix: number;
+	id: number;
+}
+
+export interface UnitCustomer {
+	ix: number;
+	id: number;
+}
+
+export interface CustomerContact {
+	ix: number;
+	id: number;
+	sort: number;
+}
+
+export interface UserUnit {
+	ix: number;
+	id: number;
+}
+
+export interface UserCustomer {
 	ix: number;
 	id: number;
 }
@@ -77,7 +124,14 @@ export interface ParamActs {
 	$PiecewiseDetail?: $PiecewiseDetail[];
 	coupon?: Coupon[];
 	couponCode?: CouponCode[];
+	customer?: Customer[];
+	unit?: Unit[];
+	contact?: Contact[];
 	userCoupon?: UserCoupon[];
+	unitCustomer?: UnitCustomer[];
+	customerContact?: CustomerContact[];
+	userUnit?: UserUnit[];
+	userCustomer?: UserCustomer[];
 }
 
 
@@ -91,5 +145,12 @@ export interface UqExt extends Uq {
 	$PiecewiseDetail: UqID<any>;
 	Coupon: UqID<any>;
 	CouponCode: UqID<any>;
+	Customer: UqID<any>;
+	Unit: UqID<any>;
+	Contact: UqID<any>;
 	UserCoupon: UqIX<any>;
+	UnitCustomer: UqIX<any>;
+	CustomerContact: UqIX<any>;
+	UserUnit: UqIX<any>;
+	UserCustomer: UqIX<any>;
 }

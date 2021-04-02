@@ -1,5 +1,6 @@
 import { makeObservable } from "mobx";
 import { PageItems, ParamActIX } from "tonva-react";
+import { JkCustomerPageItems } from "tools";
 import { CApp, CUqBase, JkCustomer } from "uq-app";
 import { Coupon } from "uq-app/uqs/JkCustomer";
 import { VBuildDiscount, VBuildPoint } from "./VBuild";
@@ -84,12 +85,7 @@ export class CCoupon extends CUqBase {
 	}
 }
 
-class CouponPageItems extends PageItems<Coupon> {
-	private jkCustomer: JkCustomer.UqExt;
-	constructor(jkCustomer: JkCustomer.UqExt) {
-		super();
-		this.jkCustomer = jkCustomer;
-	}
+class CouponPageItems extends JkCustomerPageItems<Coupon> {
 	async loadResults(param: any, pageStart:any, pageSize:number):Promise<{[name:string]:any[]}> {
 		let ret = await this.jkCustomer.IX<Coupon>({
 			IX: this.jkCustomer.UserCoupon,

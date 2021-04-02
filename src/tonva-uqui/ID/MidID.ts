@@ -88,28 +88,19 @@ export class MidID<T extends IDBase> extends Mid {
 		if (this._props !== undefined) return this._props;
 		return this._props = this.buildGridProps(this.IDUI.ID);
 	}
-
-	/*
-	protected async setDefaultNo() {
-		for (let fieldItem of this._itemSchema) {
-			if (fieldItem.name === 'no') {
-				let no = await this.ID.NO();
-				this.setNO(no, fieldItem);
-			}
-		}
-	}
-	*/
 }
 
 export class MidIXID<T extends IDBase> extends MidID<T> {
 	readonly IX: IX;
-	constructor(uq: Uq, IDUI: IDUI, IX: IX) {
+	private ix:number;
+	constructor(uq: Uq, IDUI: IDUI, IX: IX, ix:number) {
 		super(uq, IDUI);
 		this.IX = IX;
+		this.ix = ix;
 	}
 
 	createMidIDList():MidIDList<T> {
-		let ret = new MidIXIDList<any>(this.uq, this.ID, this.IX);
+		let ret = new MidIXIDList<any>(this.uq, this.ID, this.IX, this.ix);
 		ret.header = this.listHeader;
 		return ret;
 	}
@@ -119,7 +110,7 @@ export class MidIXID<T extends IDBase> extends MidID<T> {
 			ID: this.ID,
 			IX: this.IX,
 			values: [
-				{ix:undefined, id:data}
+				{ix:this.ix, id:data}
 			],
 		};
 		let ret = await this.uq.ActIX(param);

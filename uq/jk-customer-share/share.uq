@@ -11,3 +11,40 @@ ID UserPaper (
 	key user ID,
 	key paper ID,
 );
+
+IX ContactUserPaper (
+	ix,							-- Contact
+	xi,							-- UserPaper
+);
+
+QUERY GetContactShared ver 0.4 (
+	customer ID,
+	paper ID,
+)
+RETURNS ret (
+	id ID,
+	no CHAR(20),
+	name char(50),
+	vice char(100),							-- 可以描述联系人的职位等等
+	gender TINYINT,							-- 男女
+	mobile char(16),
+	email char(20),
+	birthday DATE,							-- 大致的出生日期
+	isBirthDayAccurate TINYINT,				-- 1 表示确定的生日，0 表示估算年龄
+	shared TINYINT,
+) {
+	INTO ret SELECT
+		b.id, b.no, b.name, b.vice, b.gender, b.mobile, b.email, b.birthday, b.isBirthDayAccurate, 
+		CASE WHEN EXISTS(
+				SELECT y.xi 
+					FROM ContactUserPaper as y 
+						JOIN UserPaper as z ON z.id=y.xi
+					WHERE y.ix=b.id AND z.user=$user AND z.paper=paper
+			)
+			THEN 1 
+			ELSE 0 
+		END as shared
+		FROM CustomerContact as a
+			JOIN Contact as b ON a.xi=b.id
+		WHERE a.ix=customer;
+};

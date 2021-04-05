@@ -79,6 +79,7 @@ interface ParamPage {
 export interface ParamActIX<T> {
 	IX: IX;
 	ID?: ID;
+	IXs?:{IX:IX, ix:number}[];				// 一次写入多个IX
 	values: {ix:number, id:number|T}[];
 }
 
@@ -197,7 +198,7 @@ export interface ParamIDxID {
 export interface IDXValue {
 	value: number;
 	time?: number|Date;
-	act: '='|'+';
+	setAdd: '='|'+';
 }
 
 export interface ParamIDinIX {
@@ -770,10 +771,11 @@ export class UqMan {
 	}
 
 	private ActIX = async (param: ParamActIX<any>): Promise<number[]> => {
-		let {IX, ID, values} = param;
+		let {IX, ID, values, IXs} = param;
 		let apiParam:any = {
 			IX: entityName(IX),
 			ID: entityName(ID),
+			IXs: IXs?.map(v => ({IX:entityName(v.IX), ix:v.ix})),
 			values,
 		};
 		let ret = await this.uqApi.post(IDPath('act-ix'), apiParam);

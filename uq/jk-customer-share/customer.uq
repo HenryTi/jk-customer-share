@@ -19,7 +19,7 @@ ID Contact (
 
 IX CustomerContact (
 	ix,
-	id,
+	xi,
 	sort,						-- 重要性排序
 );
 
@@ -34,15 +34,21 @@ ID Unit (
 
 IX UnitCustomer (
 	ix,
-	id,
+	xi,
 );
 
 IX UserUnit (
 	ix USER,
-	id Unit,
+	xi Unit,
 );
 
 IX UserCustomer (
 	ix USER,
-	id Customer,
+	xi Customer,
+);
+
+IDX CustomerX (
+	id,
+	paper TINYINT LOG TRACK,
+	coupon TINYINT LOG TRACK,
 );

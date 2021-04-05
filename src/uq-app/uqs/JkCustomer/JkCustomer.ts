@@ -1,6 +1,6 @@
-//=== UqApp builder created on Thu Apr 01 2021 23:56:21 GMT-0400 (GMT-04:00) ===//
+//=== UqApp builder created on Sat Apr 03 2021 23:27:11 GMT-0400 (GMT-04:00) ===//
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { IDXValue, Uq, UqTuid, UqQuery, UqID, UqIX } from "tonva-react";
+import { IDXValue, Uq, UqTuid, UqQuery, UqID, UqIDX, UqIX } from "tonva-react";
 
 
 //===============================
@@ -36,6 +36,26 @@ interface Return$pokedRet {
 }
 interface Result$poked {
 	ret: Return$pokedRet[];
+}
+
+export interface ParamGetContactShared {
+	customer: number;
+	paper: number;
+}
+interface ReturnGetContactSharedRet {
+	id: number;
+	no: string;
+	name: string;
+	vice: string;
+	gender: number;
+	mobile: string;
+	email: string;
+	birthday: any;
+	isBirthDayAccurate: number;
+	shared: number;
+}
+interface ResultGetContactShared {
+	ret: ReturnGetContactSharedRet[];
 }
 
 export interface $Piecewise {
@@ -106,6 +126,22 @@ export interface UserPaper {
 	paper: number;
 }
 
+export interface CustomerX {
+	id: number;
+	paper?: number;
+	coupon?: number;
+	$act?: number;
+	$track?: number;
+}
+
+export interface ActParamCustomerX {
+	id: number|IDXValue;
+	paper?: number|IDXValue;
+	coupon?: number|IDXValue;
+	$act?: number;
+	$track?: number;
+}
+
 export interface UserCoupon {
 	ix: number;
 	id: number;
@@ -132,6 +168,11 @@ export interface UserCustomer {
 	id: number;
 }
 
+export interface ContactUserPaper {
+	ix: number;
+	id: number;
+}
+
 export interface ParamActs {
 	$Piecewise?: $Piecewise[];
 	$PiecewiseDetail?: $PiecewiseDetail[];
@@ -142,11 +183,13 @@ export interface ParamActs {
 	contact?: Contact[];
 	paper?: Paper[];
 	userPaper?: UserPaper[];
+	customerX?: ActParamCustomerX[];
 	userCoupon?: UserCoupon[];
 	unitCustomer?: UnitCustomer[];
 	customerContact?: CustomerContact[];
 	userUnit?: UserUnit[];
 	userCustomer?: UserCustomer[];
+	contactUserPaper?: ContactUserPaper[];
 }
 
 
@@ -156,6 +199,7 @@ export interface UqExt extends Uq {
 	$sheet: UqTuid<Tuid$sheet>;
 	$user: UqTuid<Tuid$user>;
 	$poked: UqQuery<Param$poked, Result$poked>;
+	GetContactShared: UqQuery<ParamGetContactShared, ResultGetContactShared>;
 	$Piecewise: UqID<any>;
 	$PiecewiseDetail: UqID<any>;
 	Coupon: UqID<any>;
@@ -165,9 +209,11 @@ export interface UqExt extends Uq {
 	Contact: UqID<any>;
 	Paper: UqID<any>;
 	UserPaper: UqID<any>;
+	CustomerX: UqIDX<any>;
 	UserCoupon: UqIX<any>;
 	UnitCustomer: UqIX<any>;
 	CustomerContact: UqIX<any>;
 	UserUnit: UqIX<any>;
 	UserCustomer: UqIX<any>;
+	ContactUserPaper: UqIX<any>;
 }

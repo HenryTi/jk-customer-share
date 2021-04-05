@@ -91,12 +91,14 @@ export class MidID<T extends IDBase> extends Mid {
 }
 
 export class MidIXID<T extends IDBase> extends MidID<T> {
-	readonly IX: IX;
-	private ix:number;
-	constructor(uq: Uq, IDUI: IDUI, IX: IX, ix:number) {
+	private readonly IX: IX;
+	private readonly ix:number;
+	private readonly IXs?:{IX:IX, ix:number}[];
+	constructor(uq: Uq, IDUI: IDUI, IX: IX, ix:number, IXs?:{IX:IX, ix:number}[]) {
 		super(uq, IDUI);
 		this.IX = IX;
 		this.ix = ix;
+		this.IXs = IXs;
 	}
 
 	createMidIDList():MidIDList<T> {
@@ -109,6 +111,7 @@ export class MidIXID<T extends IDBase> extends MidID<T> {
 		let param: ParamActIX<T> = {
 			ID: this.ID,
 			IX: this.IX,
+			IXs: this.IXs,
 			values: [
 				{ix:this.ix, id:data}
 			],

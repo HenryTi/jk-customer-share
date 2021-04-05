@@ -1,12 +1,22 @@
+import { action, makeObservable } from "mobx";
 import { JkCustomerPageItems } from "tools";
-import { CUqBase } from "uq-app";
-import { Paper } from "uq-app/uqs/JkCustomer";
+import { CApp, CUqBase } from "uq-app";
+import { Contact, Paper } from "uq-app/uqs/JkCustomer";
+import { ContactShared, CustomerPageItems, CustomerWithContacts } from "./customerWithContacts";
 import { VShare } from "./VShare";
 import { VSharePaper } from "./VSharePaper";
 
 export class CShare extends CUqBase {
 	paperItems: PaperPageItems;
 	paper: Paper;
+	customers: CustomerPageItems;
+
+	constructor(cApp: CApp) {
+		super(cApp);
+		makeObservable(this, {
+			showCustomerContacts: action,
+		});
+	}
 
 	protected async internalStart() {
 		this.paperItems = new PaperPageItems(this.uqs.JkCustomer);
@@ -24,7 +34,42 @@ export class CShare extends CUqBase {
 
 	onPaper = async(paper: Paper) => {
 		this.paper = paper;
+		this.customers = new CustomerPageItems(this.uqs.JkCustomer);
 		this.openVPage(VSharePaper);
+		this.customers.first(undefined);
+	}
+
+	async showCustomerContacts(customer: CustomerWithContacts) {
+		let {contacts, visible} = customer;
+		if (visible === true) {
+			customer.visible = false;
+		}
+		else {
+			customer.visible = true;
+			if (!contacts) {
+				await this.customers.loadCutomerContacts(customer, this.paper);
+			}
+		}
+	}
+
+	async shareContact(customer:CustomerWithContacts, contact: ContactShared) {
+		alert(`share ${this.paper.caption} to customer ${customer.name} contact ${contact.name}`);
+		let {JkCustomer} = this.uqs;
+		await JkCustomer.ActIX({
+			IX: JkCustomer.ContactUserPaper,
+			ID: JkCustomer.UserPaper,
+			values: [{ix: contact.id, id: {user: undefined, paper:this.paper.id}}]
+		});
+		await JkCustomer.Acts({
+			customerX: [{
+				id: customer.id,
+				paper: 1,
+				//coupon?: number|IDXValue;
+				$act: 2,						// paper
+				$track: this.paper.id
+			}]
+		});
+		contact.shared = 1;
 	}
 }
 

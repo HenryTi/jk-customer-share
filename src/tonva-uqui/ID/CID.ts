@@ -28,7 +28,7 @@ export class CID<T extends IDBase> extends Controller {
 		this.midID = midID;
 	}
 
-	async init() {
+    protected async beforeStart():Promise<boolean> {
 		await this.midID.init();
 		this.createFormView();
 		this.midIDList =  this.midID.createMidIDList();
@@ -39,11 +39,11 @@ export class CID<T extends IDBase> extends Controller {
 		this.midIDList.renderTop = this.renderListTop;
 		this.midIDList.renderBottom = this.renderListBottom;
 		this.cList = this.createCList();
+        return true;
 	}
 
 	protected async internalStart() {
 		this.valueChanged = false;
-		await this.init();
 		await this.cList.call();
 		this.returnCall(this.valueChanged);
 	}

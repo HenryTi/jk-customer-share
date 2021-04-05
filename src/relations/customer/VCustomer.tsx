@@ -7,7 +7,7 @@ export class VCustomer extends VPage<CIDCustomer> {
 	header() {return '客户'}
 	right() {return this.controller.renderViewRight()}
 	content() {
-		let {item, midID} = this.controller;
+		let {item, midID, cCustomerX} = this.controller;
 		let {props} = midID;
 		return <div className="py-3">
 			<PropGrid rows={props}
@@ -16,7 +16,7 @@ export class VCustomer extends VPage<CIDCustomer> {
 				onClick={this.controller.showContacts}
 				right={<FA name="angle-right" />}>联系人</LMR>
 			<div className="mt-3 mb-1 px-3 text-muted small">客户往来详情</div>
-			<div className="text-muted small bg-white px-3 py-2">[无]</div>
+			<div className="">{cCustomerX.renderFieldHistory()}</div>
 		</div>;	
 	}
 

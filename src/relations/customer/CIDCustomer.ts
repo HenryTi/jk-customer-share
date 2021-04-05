@@ -1,5 +1,5 @@
-import { IDUI } from "tonva-react";
-import { CID, MidIXID } from "tonva-uqui";
+import { env, IDUI } from "tonva-react";
+import { CID, CIDX, MidIDX, MidIXID } from "tonva-uqui";
 import { JkCustomerPageItems } from "tools";
 import { JkCustomer } from "uq-app";
 import { Contact, Customer } from "uq-app/uqs/JkCustomer";
@@ -7,8 +7,13 @@ import { VCustomer } from "./VCustomer";
 
 export class CIDCustomer extends CID<Customer> {
 	contacts: ContactPageItems;
+	cCustomerX: CIDX;
 
 	async onItemView() {
+		let uq = this.midID.uq as JkCustomer.UqExt;
+		let midIDX = new MidIDX(uq, uq.CustomerX, uq.Customer, env.timeZone);
+		this.cCustomerX = new CIDX(midIDX);
+		this.cCustomerX.startFieldHistory(this.item, 'paper');
 		this.openVPage(VCustomer);
 	}
 
@@ -41,7 +46,7 @@ export class CIDCustomer extends CID<Customer> {
 
 class ContactPageItems extends JkCustomerPageItems<Contact> {
 	async loadResults(param: any, pageStart:any, pageSize:number):Promise<{[name:string]:any[]}> {
-		let ret = await this.jkCustomer.IX<Customer>({
+		let ret = await this.jkCustomer.IX<Contact>({
 			IX: this.jkCustomer.CustomerContact,
 			ix: param,
 			IDX: [this.jkCustomer.Contact],

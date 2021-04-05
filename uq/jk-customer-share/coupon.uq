@@ -15,5 +15,5 @@ ID Coupon (
 
 IX UserCoupon (
 	ix User,
-	id Coupon,
+	xi Coupon,
 );

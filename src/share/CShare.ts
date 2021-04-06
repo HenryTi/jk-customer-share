@@ -58,7 +58,7 @@ export class CShare extends CUqBase {
 		await JkCustomer.ActIX({
 			IX: JkCustomer.ContactUserPaper,
 			ID: JkCustomer.UserPaper,
-			values: [{ix: contact.id, id: {user: undefined, paper:this.paper.id}}]
+			values: [{ix: contact.id, xi: {user: undefined, paper:this.paper.id}}]
 		});
 		await JkCustomer.Acts({
 			customerX: [{

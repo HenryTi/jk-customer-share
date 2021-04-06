@@ -80,7 +80,7 @@ export interface ParamActIX<T> {
 	IX: IX;
 	ID?: ID;
 	IXs?:{IX:IX, ix:number}[];				// 一次写入多个IX
-	values: {ix:number, id:number|T}[];
+	values: {ix:number, xi:number|T}[];
 }
 
 export interface ParamActIXSort {

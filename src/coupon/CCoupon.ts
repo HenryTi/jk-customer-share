@@ -80,7 +80,7 @@ export class CCoupon extends CUqBase {
 			ID: JkCustomer.Coupon,
 			IX: JkCustomer.UserCoupon,
 			values: [
-				{ix:undefined, id:{uCode, code}}
+				{ix:undefined, xi:{uCode, code}}
 			],
 		};
 		let ret = await JkCustomer.ActIX(param);

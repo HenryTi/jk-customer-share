@@ -1,4 +1,4 @@
-import { Res, setRes, TFunc, UI } from "tonva-react";
+import { EasyDate, LMR, Res, setRes, TFunc, UI } from "tonva-react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FieldItem, FieldItemInt, FieldItemNum, FieldItemString, FieldItemId } from "tonva-react";
 import { Coupon } from "./JkCustomer";
@@ -11,25 +11,40 @@ const fields = {
 		"isKey": false,
 		"label": "Id"
 	} as FieldItemId,
-	uCode: {
-		"name": "uCode",
-		"type": "string",
+	date: {
+		"name": "date",
 		"isKey": true,
-		"widget": "string",
-		"label": "UCode"
-	} as FieldItemString,
+		"label": "Date"
+	} as undefined,
 	code: {
 		"name": "code",
-		"type": "string",
-		"isKey": false,
+		"type": "integer",
+		"isKey": true,
 		"widget": "string",
 		"label": "Code"
-	} as FieldItemString,
+	} as FieldItemInt,
+	type: {
+		"name": "type",
+		"isKey": false,
+		"label": "Type"
+	} as undefined,
+	$owner: {
+		"name": "$owner",
+		"type": "integer",
+		"isKey": false,
+		"widget": "updown",
+		"label": "$owner"
+	} as FieldItemInt,
+	$create: {
+		"name": "$create",
+		"isKey": false,
+		"label": "$create"
+	} as undefined,
 };
 /*==fields==*/
 
 const fieldArr: FieldItem[] = [
-	fields.uCode, fields.code, 
+	fields.date, fields.code, fields.type, fields.$owner, fields.$create, 
 ];
 
 export const ui: UI = {
@@ -52,6 +67,13 @@ export const t:TFunc = (str:string|JSX.Element): string|JSX.Element => {
 }
 
 export function render(item: Coupon):JSX.Element {
-	let {code} = item;
-	return <b>{code}</b>;
+	let {type, code, $create} = item;
+	let n = String(100000000 + code);
+	let sCode = n.substr(1, 4) + '-' + n.substring(5);
+	let left = type===1?
+		<span className="text-info mr-3">积分券</span>
+		:
+		<span className="text-success mr-3">优惠券</span>
+	let right = <small className="text-muted"><EasyDate date={$create} /></small>;
+	return <LMR className="w-100" left={left} right={right}><b className="text-primary">{sCode}</b></LMR>;
 };

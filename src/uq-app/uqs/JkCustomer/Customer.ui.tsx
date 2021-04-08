@@ -59,5 +59,6 @@ export const t:TFunc = (str:string|JSX.Element): string|JSX.Element => {
 }
 
 export function render(item: Customer):JSX.Element {
-	return <>{JSON.stringify(item)}</>;
+	let {name} = item;
+	return <>{name}</>;
 };

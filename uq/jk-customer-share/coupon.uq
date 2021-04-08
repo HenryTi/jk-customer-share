@@ -1,15 +1,16 @@
 -- 用来记录正在使用中的NO，编号。
 ID CouponCode (
 	id,
-	key code CHAR(12),
+	key code INT,
 	expireDate DATE,				-- 失效日期
 );
 
 -- 生成的Coupon
 ID Coupon (
 	id,
-	KEY uCode CHAR(16),				-- 前6位生成日期，后面是code
-	code CHAR(12),					-- 客户可见的code
+	KEY date DATE,
+	KEY code INT,					-- 客户可见的code
+	type TINYINT,					-- 1: 积分券，2：优惠券
 	sys(owner, create),				-- 生成人，日期
 );
 
@@ -17,3 +18,43 @@ IX UserCoupon (
 	ix User,
 	xi Coupon,
 );
+
+IDX UserCouponMax (
+	id,
+	date DATE,
+	count SMALLINT DEFAULT 0 SUM,
+);
+
+ACT CreateCoupon ver 5 (
+	couponType TINYINT,				-- 1: 积分券，2：优惠券
+)
+RETURNS ret (
+	id ID,
+	date DATE,
+	coupon BIGINT,
+)
+{
+	VAR i INT = 0, maxCount INT = 10, n INT, code INT, couponCodeId ID, couponId ID;
+	WITH UserCouponMax as a id=$user SET a.count=0, a.date=date($date) WHERE a.date IS NULL OR a.date<>date($date);
+	IF (SELECT count FROM UserCouponMax WHERE id=$user)>10 {
+		RETURN;
+	}
+	WHILE i<maxCount {
+		SET n = RAND() * 1000000;
+		SET code = (n / 10000 % 100);
+		SET code = code + (n / 100 % 100);
+		SET code = code + (n % 100);
+		SET code = code + n * 100;
+		IF not exists(select a.id from CouponCode as a where a.code=code and a.expireDate<$date) {
+			SET couponCodeId=ID(CouponCode new, code);
+			WITH CouponCode ID couponCodeId SET expireDate=dateadd(day, 10, $date);
+			SET couponId=ID(Coupon new, $date, code);
+			WITH Coupon ID couponId SET type=couponType;
+			WITH UserCouponMax ID=$user SET count+=1;
+			WITH UserCoupon IX=$user XI=couponId;
+			INTO ret SELECT couponId as id, date($date) as date, code as coupon;
+			break;
+		}
+		SET i=i+1;
+	}
+};

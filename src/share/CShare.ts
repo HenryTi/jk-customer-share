@@ -1,7 +1,7 @@
 import { action, makeObservable } from "mobx";
 import { JkCustomerPageItems } from "tools";
 import { CApp, CUqBase } from "uq-app";
-import { Contact, Paper } from "uq-app/uqs/JkCustomer";
+import { Paper } from "uq-app/uqs/JkCustomer";
 import { ContactShared, CustomerPageItems, CustomerWithContacts } from "./customerWithContacts";
 import { VShare } from "./VShare";
 import { VSharePaper } from "./VSharePaper";
@@ -55,7 +55,7 @@ export class CShare extends CUqBase {
 	async shareContact(customer:CustomerWithContacts, contact: ContactShared) {
 		alert(`share ${this.paper.caption} to customer ${customer.name} contact ${contact.name}`);
 		let {JkCustomer} = this.uqs;
-		await JkCustomer.ActIX({
+		let ret = await JkCustomer.ActIX({
 			IX: JkCustomer.ContactUserPaper,
 			ID: JkCustomer.UserPaper,
 			values: [{ix: contact.id, xi: {user: undefined, paper:this.paper.id}}]
@@ -65,8 +65,8 @@ export class CShare extends CUqBase {
 				id: customer.id,
 				paper: 1,
 				//coupon?: number|IDXValue;
-				$act: 2,						// paper
-				$track: this.paper.id
+				$act: 3,						//2: paper, 3: ContactUserPaper
+				$track: ret[0]
 			}]
 		});
 		contact.shared = 1;

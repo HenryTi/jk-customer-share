@@ -1,6 +1,6 @@
-//=== UqApp builder created on Sat Apr 03 2021 23:27:11 GMT-0400 (GMT-04:00) ===//
+//=== UqApp builder created on Thu Apr 08 2021 18:56:58 GMT-0400 (GMT-04:00) ===//
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { IDXValue, Uq, UqTuid, UqQuery, UqID, UqIDX, UqIX } from "tonva-react";
+import { IDXValue, Uq, UqTuid, UqAction, UqQuery, UqID, UqIDX, UqIX } from "tonva-react";
 
 
 //===============================
@@ -27,6 +27,22 @@ export interface Tuid$user {
 	icon: string;
 	assigned: string;
 	poke: number;
+}
+
+export interface TuidA {
+	name: string;
+}
+
+export interface ParamCreateCoupon {
+	couponType: number;
+}
+interface ReturnCreateCouponRet {
+	id: number;
+	date: any;
+	coupon: number;
+}
+interface ResultCreateCoupon {
+	ret: ReturnCreateCouponRet[];
 }
 
 export interface Param$poked {
@@ -77,13 +93,16 @@ export interface $PiecewiseDetail {
 
 export interface Coupon {
 	id?: number;
-	uCode: string;
-	code: string;
+	date: any;
+	code: number;
+	type: number;
+	$owner?: number;
+	$create?: any;
 }
 
 export interface CouponCode {
 	id?: number;
-	code: string;
+	code: number;
 	expireDate: any;
 }
 
@@ -134,6 +153,13 @@ export interface CustomerX {
 	$track?: number;
 }
 
+export interface UserCouponMax {
+	id: number;
+	date?: any;
+	count?: number;
+	$act?: number;
+}
+
 export interface ActParamCustomerX {
 	id: number|IDXValue;
 	paper?: number|IDXValue;
@@ -142,35 +168,43 @@ export interface ActParamCustomerX {
 	$track?: number;
 }
 
+export interface ActParamUserCouponMax {
+	id: number|IDXValue;
+	date?: any|IDXValue;
+	count?: number|IDXValue;
+	$act?: number;
+}
+
 export interface UserCoupon {
 	ix: number;
-	id: number;
+	xi: number;
 }
 
 export interface UnitCustomer {
 	ix: number;
-	id: number;
+	xi: number;
 }
 
 export interface CustomerContact {
 	ix: number;
-	id: number;
+	xi: number;
 	sort: number;
 }
 
 export interface UserUnit {
 	ix: number;
-	id: number;
+	xi: number;
 }
 
 export interface UserCustomer {
 	ix: number;
-	id: number;
+	xi: number;
 }
 
 export interface ContactUserPaper {
-	ix: number;
 	id: number;
+	ix: number;
+	xi: number;
 }
 
 export interface ParamActs {
@@ -184,6 +218,7 @@ export interface ParamActs {
 	paper?: Paper[];
 	userPaper?: UserPaper[];
 	customerX?: ActParamCustomerX[];
+	userCouponMax?: ActParamUserCouponMax[];
 	userCoupon?: UserCoupon[];
 	unitCustomer?: UnitCustomer[];
 	customerContact?: CustomerContact[];
@@ -198,6 +233,8 @@ export interface UqExt extends Uq {
 
 	$sheet: UqTuid<Tuid$sheet>;
 	$user: UqTuid<Tuid$user>;
+	A: UqTuid<TuidA>;
+	CreateCoupon: UqAction<ParamCreateCoupon, ResultCreateCoupon>;
 	$poked: UqQuery<Param$poked, Result$poked>;
 	GetContactShared: UqQuery<ParamGetContactShared, ResultGetContactShared>;
 	$Piecewise: UqID<any>;
@@ -210,6 +247,7 @@ export interface UqExt extends Uq {
 	Paper: UqID<any>;
 	UserPaper: UqID<any>;
 	CustomerX: UqIDX<any>;
+	UserCouponMax: UqIDX<any>;
 	UserCoupon: UqIX<any>;
 	UnitCustomer: UqIX<any>;
 	CustomerContact: UqIX<any>;

@@ -1,5 +1,5 @@
 import { FA, List, VPage } from "tonva-react";
-import { Contact, Paper } from "uq-app/uqs/JkCustomer";
+import { Paper } from "uq-app/uqs/JkCustomer";
 import { CShare } from "./CShare";
 import { ContactShared, CustomerWithContacts } from "./customerWithContacts";
 

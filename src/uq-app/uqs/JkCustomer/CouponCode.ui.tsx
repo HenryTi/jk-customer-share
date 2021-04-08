@@ -13,11 +13,11 @@ const fields = {
 	} as FieldItemId,
 	code: {
 		"name": "code",
-		"type": "string",
+		"type": "integer",
 		"isKey": true,
 		"widget": "string",
 		"label": "Code"
-	} as FieldItemString,
+	} as FieldItemInt,
 	expireDate: {
 		"name": "expireDate",
 		"isKey": false,

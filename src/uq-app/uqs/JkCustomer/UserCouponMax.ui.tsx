@@ -1,31 +1,37 @@
 import { Res, setRes, TFunc, UI } from "tonva-react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FieldItem, FieldItemInt, FieldItemNum, FieldItemString, FieldItemId } from "tonva-react";
-import { UserCustomer } from "./JkCustomer";
+import { UserCouponMax } from "./JkCustomer";
 
 /*--fields--*/
 const fields = {
-	ix: {
-		"name": "ix",
+	id: {
+		"name": "id",
 		"type": "id",
 		"isKey": false,
-		"label": "Ix"
+		"label": "Id"
 	} as FieldItemId,
-	xi: {
-		"name": "xi",
-		"type": "id",
+	date: {
+		"name": "date",
 		"isKey": false,
-		"label": "Xi"
-	} as FieldItemId,
+		"label": "Date"
+	} as undefined,
+	count: {
+		"name": "count",
+		"type": "integer",
+		"isKey": false,
+		"widget": "updown",
+		"label": "Count"
+	} as FieldItemInt,
 };
 /*==fields==*/
 
 const fieldArr: FieldItem[] = [
-	fields.xi, 
+	fields.date, fields.count, 
 ];
 
 export const ui: UI = {
-	label: "UserCustomer",
+	label: "UserCouponMax",
 	fieldArr,
 	fields,
 };
@@ -43,6 +49,6 @@ export const t:TFunc = (str:string|JSX.Element): string|JSX.Element => {
 	return res[str as string] ?? str;
 }
 
-export function render(item: UserCustomer):JSX.Element {
+export function render(item: UserCouponMax):JSX.Element {
 	return <>{JSON.stringify(item)}</>;
 };

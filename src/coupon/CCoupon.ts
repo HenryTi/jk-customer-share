@@ -1,14 +1,15 @@
 import { makeObservable } from "mobx";
-import { ParamActIX } from "tonva-react";
 import { JkCustomerPageItems } from "tools";
 import { CApp, CUqBase } from "uq-app";
 import { Coupon } from "uq-app/uqs/JkCustomer";
 import { VActions } from "./VActions";
-import { VBuildDiscount, VBuildPoint } from "./VBuild";
-import { VCoupon } from "./VCoupon";
+import { VDiscountCoupon, VPointCoupon } from "./VCoupon";
+import { VCoupons } from "./VCoupons";
 
 export class CCoupon extends CUqBase {
 	couponItems: CouponPageItems;
+	coupon: Coupon;
+	maxCoupon = 10;
 
 	constructor(cApp: CApp) {
 		super(cApp);
@@ -18,7 +19,7 @@ export class CCoupon extends CUqBase {
 
 	protected async internalStart() {
 		this.couponItems = new CouponPageItems(this.uqs.JkCustomer);
-		this.openVPage(VCoupon);
+		this.openVPage(VCoupons);
 		await this.couponItems.first(undefined);
 	}
 
@@ -34,59 +35,27 @@ export class CCoupon extends CUqBase {
 		alert(coupon.code);
 	}
 
-	showBuildPoint = () => {
-		this.openVPage(VBuildPoint);
+	showBuildPoint = async () => {
+		await this.buildCoupon(1);
+		this.openVPage(VPointCoupon);
 	}
 
-	async buildPoint() {
-		await this.buildCoupon();
+	showBuildDiscount = async () => {
+		await this.buildCoupon(2);
+		this.openVPage(VDiscountCoupon);
 	}
 
-	showBuildDiscount = () => {
-		this.openVPage(VBuildDiscount);
-	}
-
-	async buildDiscount() {
-		await this.buildCoupon();
-	}
-
-	private async createRandomCode():Promise<string> {
+	private async buildCoupon(couponType: 1|2) {
 		let {JkCustomer} = this.uqs;
-		for (let i=0; i<10; i++) {
-			let code = String(1000000 + Math.round((Math.random() * 1000000))).substr(1);
-			let ret = await JkCustomer.KeyID({
-				ID: JkCustomer.CouponCode,
-				key: {code},		
-			});
-			if (ret.length === 0) {
-				let expireDate = new Date();
-				expireDate.setDate(expireDate.getDate() + 30);
-				let sDate = expireDate.toISOString().split('T')[0];
-				await JkCustomer.Acts({
-					couponCode: [{code, expireDate:sDate}]
-				})
-				return code;
-			}
+		let ret = await JkCustomer.CreateCoupon.submitReturns({couponType});
+		let row = ret.ret[0];
+		if (!row) {
+			this.coupon = undefined;
+			return;
 		}
-		return;
-	}
-
-	private async buildCoupon() {
-		let {JkCustomer} = this.uqs;
-		let code = await this.createRandomCode();
-		let date = new Date();
-		let uCode = String(date.getFullYear()).substr(2) + String(100 + date.getMonth()+1).substr(1) + String(100 + date.getDate()).substr(1) + code;
-		let param: ParamActIX<Coupon> = {
-			ID: JkCustomer.Coupon,
-			IX: JkCustomer.UserCoupon,
-			values: [
-				{ix:undefined, xi:{uCode, code}}
-			],
-		};
-		let ret = await JkCustomer.ActIX(param);
-		let id = ret[0];
-		if (!id) return;
-		this.couponItems.append({id, uCode, code}); //, $create: date, $owner: this.user.id});
+		let {id, date, coupon} = row;
+		this.coupon = {id, type: couponType, date, code: coupon};
+		this.couponItems.items.unshift(this.coupon);		
 	}
 }
 
@@ -96,6 +65,7 @@ class CouponPageItems extends JkCustomerPageItems<Coupon> {
 			IX: this.jkCustomer.UserCoupon,
 			ix: undefined,
 			IDX: [this.jkCustomer.Coupon],
+			order: 'desc',
 			page: {
 				start: pageStart,
 				size: pageSize,

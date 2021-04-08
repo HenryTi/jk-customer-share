@@ -12,7 +12,8 @@ ID UserPaper (
 	key paper ID,
 );
 
-IX ContactUserPaper (
+IX ContactUserPaper ver 0.3 (
+	id,							-- 为IX定义id，用于log track
 	ix,							-- Contact
 	xi,							-- UserPaper
 );

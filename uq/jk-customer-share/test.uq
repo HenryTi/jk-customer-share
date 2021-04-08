@@ -1,0 +1,4 @@
+TUID a ver 0.7 (
+	id,
+	name char(50),
+);

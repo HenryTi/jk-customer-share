@@ -50,7 +50,7 @@ export interface Field {
     null?: boolean;
     size?: number;
     owner?: string;
-    _tuid: TuidBox;
+    _tuid?: TuidBox;
 }
 export interface ArrFields {
     name: string;
@@ -143,6 +143,7 @@ export interface ParamIDDetailGet {
 export interface ParamID {
 	IDX: (ID|IDX) | (ID|IDX)[];
 	id: number | number[];
+	order?: 'asc' | 'desc',
 	page?: ParamPage;
 }
 
@@ -158,6 +159,7 @@ export interface ParamIX {
 	IX1?: IX;
 	ix: number | number[];
 	IDX?: (ID|IDX)[];
+	order?: 'asc' | 'desc',
 	page?: ParamPage;
 }
 
